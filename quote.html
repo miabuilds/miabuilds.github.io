@@ -1,0 +1,604 @@
+<title>前端接案報價 · 林雨柔 Yujou Lin</title>
+<style>
+  :root {
+    --bg:#F1F1EE; --surface:#FFFFFF; --surface-2:#F6F6F3;
+    --ink:#1A1D24; --ink-soft:#565C68; --ink-faint:#8B909C;
+    --line:#E3E2DC; --line-strong:#CFCEC5;
+    --accent:#0F766E; --accent-bright:#12968A; --accent-wash:#E2EFED; --amount:#0F766E;
+    --shadow-sm:0 1px 2px rgba(26,29,36,.05);
+    --shadow:0 2px 6px rgba(26,29,36,.06),0 16px 40px rgba(26,29,36,.07);
+    --radius:16px;
+    --font:"PingFang TC","Hiragino Sans","Noto Sans TC","Noto Sans JP",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14161B; --surface:#1C1F26; --surface-2:#22262F;
+      --ink:#ECECE7; --ink-soft:#ABB0BC; --ink-faint:#757B88;
+      --line:#2B2F39; --line-strong:#3A3F4B;
+      --accent:#2DD4BF; --accent-bright:#5EE6D4; --accent-wash:#16302D; --amount:#2DD4BF;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+      --shadow:0 2px 6px rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.4); }
+  }
+  :root[data-theme="light"]{ --bg:#F1F1EE; --surface:#FFFFFF; --surface-2:#F6F6F3;
+    --ink:#1A1D24; --ink-soft:#565C68; --ink-faint:#8B909C; --line:#E3E2DC; --line-strong:#CFCEC5;
+    --accent:#0F766E; --accent-bright:#12968A; --accent-wash:#E2EFED; --amount:#0F766E;
+    --shadow-sm:0 1px 2px rgba(26,29,36,.05); --shadow:0 2px 6px rgba(26,29,36,.06),0 16px 40px rgba(26,29,36,.07); }
+  :root[data-theme="dark"]{ --bg:#14161B; --surface:#1C1F26; --surface-2:#22262F;
+    --ink:#ECECE7; --ink-soft:#ABB0BC; --ink-faint:#757B88; --line:#2B2F39; --line-strong:#3A3F4B;
+    --accent:#2DD4BF; --accent-bright:#5EE6D4; --accent-wash:#16302D; --amount:#2DD4BF;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 2px 6px rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.4); }
+
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:clamp(24px,5vw,56px) clamp(16px,4vw,36px) 72px; }
+
+  .hero{ display:flex; flex-direction:column; gap:16px; margin-bottom:40px; }
+  .herotop{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .eyebrow{ font-family:var(--mono); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:0; }
+  h1{ margin:0; font-size:clamp(28px,5.5vw,46px); font-weight:800; letter-spacing:-.01em; line-height:1.1; text-wrap:balance; }
+  .hero p.sub{ margin:0; font-size:clamp(15px,2.2vw,18px); color:var(--ink-soft); max-width:60ch; }
+  .trust{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .badge{ font-size:12.5px; color:var(--ink-soft); background:var(--surface); border:1px solid var(--line);
+    border-radius:99px; padding:5px 12px; display:inline-flex; gap:6px; align-items:center; }
+
+  .langbar{ display:inline-flex; background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:3px; gap:2px; flex:0 0 auto; }
+  .langbar button{ font-family:var(--font); font-size:13px; font-weight:600; border:none; background:transparent; color:var(--ink-faint);
+    padding:5px 10px; border-radius:6px; cursor:pointer; transition:background .15s,color .15s; }
+  .langbar button.on{ background:var(--accent); color:#fff; }
+  .langbar button:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+
+  .calc{ display:grid; grid-template-columns:1.35fr 1fr; gap:22px; align-items:start; }
+  @media (max-width:820px){ .calc{ grid-template-columns:1fr; } }
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+  .panel.inputs{ padding:clamp(18px,3vw,28px); display:flex; flex-direction:column; gap:24px; }
+
+  .field{ display:flex; flex-direction:column; gap:10px; }
+  .field > .lab{ font-size:13px; font-weight:700; color:var(--ink); display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .lab .hint{ font-weight:400; font-size:11.5px; color:var(--ink-faint); font-family:var(--mono); }
+
+  select{ width:100%; font-family:var(--font); font-size:15px; color:var(--ink); background:var(--surface-2);
+    border:1px solid var(--line-strong); border-radius:10px; padding:11px 12px; appearance:none; cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--ink-faint) 50%),linear-gradient(135deg,var(--ink-faint) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%; background-size:5px 5px,5px 5px; background-repeat:no-repeat; }
+  select:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+
+  .seg{ display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:4px; background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:4px; }
+  .seg button{ font-family:var(--font); font-size:13px; color:var(--ink-soft); background:transparent; border:none; border-radius:8px;
+    padding:9px 6px; cursor:pointer; transition:background .15s,color .15s; font-weight:600; line-height:1.3; }
+  .seg button .mul{ display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); margin-top:2px; }
+  .seg button[aria-pressed="true"]{ background:var(--accent); color:#fff; box-shadow:var(--shadow-sm); }
+  .seg button[aria-pressed="true"] .mul{ color:rgba(255,255,255,.85); }
+  .seg button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  @media (max-width:460px){ .seg{ grid-auto-flow:row; grid-auto-columns:auto; } }
+
+  .rangewrap{ display:flex; align-items:center; gap:14px; }
+  input[type=range]{ flex:1; appearance:none; height:6px; border-radius:99px; background:var(--line-strong); outline:none; }
+  input[type=range]::-webkit-slider-thumb{ appearance:none; width:20px; height:20px; border-radius:50%; background:var(--accent); border:3px solid var(--surface); box-shadow:var(--shadow-sm); cursor:pointer; }
+  input[type=range]::-moz-range-thumb{ width:20px; height:20px; border-radius:50%; background:var(--accent); border:3px solid var(--surface); cursor:pointer; }
+  input[type=range]:focus-visible::-webkit-slider-thumb{ outline:2px solid var(--accent); outline-offset:2px; }
+  .rangeval{ font-family:var(--mono); font-size:15px; font-weight:700; min-width:66px; text-align:right; font-variant-numeric:tabular-nums; color:var(--ink); }
+
+  .addons{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  @media (max-width:460px){ .addons{ grid-template-columns:1fr; } }
+  .addon{ display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer; background:var(--surface-2);
+    border:1px solid var(--line); border-radius:10px; padding:10px 12px; user-select:none; transition:border-color .15s,background .15s; }
+  .addon:hover{ border-color:var(--line-strong); }
+  .addon input{ appearance:none; width:18px; height:18px; flex:0 0 auto; border:1.5px solid var(--line-strong); border-radius:5px; background:var(--surface); cursor:pointer; position:relative; }
+  .addon input:checked{ background:var(--accent); border-color:var(--accent); }
+  .addon input:checked::after{ content:""; position:absolute; left:5px; top:1.5px; width:5px; height:9px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); }
+  .addon input:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .addon:has(input:checked){ border-color:var(--accent); background:var(--accent-wash); }
+  .addon .d{ margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink-faint); }
+
+  .result{ position:sticky; top:20px; padding:clamp(20px,3vw,26px); display:flex; flex-direction:column; gap:18px; }
+  .result .rhead{ display:flex; justify-content:space-between; align-items:center; }
+  .result .rhead .t{ font-size:13px; font-weight:700; color:var(--ink-soft); }
+  .cur{ display:inline-flex; background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:3px; gap:2px; }
+  .cur button{ font-family:var(--mono); font-size:11px; font-weight:700; border:none; background:transparent; color:var(--ink-faint); padding:4px 8px; border-radius:6px; cursor:pointer; }
+  .cur button[aria-pressed="true"]{ background:var(--accent); color:#fff; }
+  .cur button:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+
+  .amount-main{ display:flex; flex-direction:column; gap:3px; }
+  .amount-main .label{ font-size:12px; color:var(--ink-faint); font-family:var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+  .amount-main .val{ font-family:var(--mono); font-weight:800; font-size:clamp(24px,4.6vw,36px); color:var(--amount); font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.05; }
+  .amount-main .val .to{ color:var(--ink-faint); font-weight:600; font-size:.62em; margin:0 6px; }
+  .amount-main .tax{ font-size:11.5px; color:var(--ink-faint); }
+
+  .metrics{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border-radius:12px; overflow:hidden; border:1px solid var(--line); }
+  .metric{ background:var(--surface); padding:12px 14px; display:flex; flex-direction:column; gap:2px; }
+  .metric .k{ font-size:11.5px; color:var(--ink-faint); }
+  .metric .v{ font-family:var(--mono); font-weight:700; font-size:16px; font-variant-numeric:tabular-nums; }
+  .metric .v small{ font-size:11px; color:var(--ink-faint); font-weight:600; }
+
+  .breakdown{ border-top:1px dashed var(--line-strong); padding-top:14px; display:flex; flex-direction:column; gap:7px; }
+  .brow{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-soft); gap:12px; }
+  .brow .bv{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink); flex:0 0 auto; }
+
+  .copybtn{ margin-top:2px; width:100%; font-family:var(--font); font-size:14px; font-weight:700; background:var(--accent); color:#fff;
+    border:none; border-radius:11px; padding:13px; cursor:pointer; transition:background .15s,transform .05s; display:inline-flex; justify-content:center; gap:8px; align-items:center; }
+  .copybtn:hover{ background:var(--accent-bright); }
+  .copybtn:active{ transform:translateY(1px); }
+  .copybtn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .rate{ display:flex; flex-direction:column; gap:9px; background:var(--surface-2); border:1px dashed var(--line-strong); border-radius:12px; padding:13px 14px; }
+  .rate .rt{ font-size:12px; font-weight:700; color:var(--ink-soft); display:flex; justify-content:space-between; gap:10px; }
+  .rate .rt b{ font-family:var(--mono); color:var(--accent); }
+
+  .below{ margin-top:52px; display:flex; flex-direction:column; gap:40px; }
+  .sec h2{ font-size:clamp(18px,3vw,22px); font-weight:800; margin:0 0 4px; }
+  .sec .lead{ color:var(--ink-soft); font-size:14px; margin:0 0 18px; }
+  .cards3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:720px){ .cards3{ grid-template-columns:1fr; } }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-sm); }
+  .card .step{ font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:700; }
+  .card h3{ margin:6px 0; font-size:15.5px; }
+  .card p{ margin:0; font-size:13.5px; color:var(--ink-soft); }
+  .incl{ display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; }
+  @media (max-width:560px){ .incl{ grid-template-columns:1fr; } }
+  .incl .row{ display:flex; gap:9px; font-size:13.5px; padding:5px 0; border-bottom:1px solid var(--line); }
+  .incl .row .mk{ color:var(--accent); font-weight:800; }
+  .incl .row.no .mk{ color:var(--ink-faint); }
+  .incl .row.no{ color:var(--ink-faint); }
+  .notes{ background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; }
+  .notes ul{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:7px; }
+  .notes li{ font-size:13px; color:var(--ink-soft); }
+  .notes b{ color:var(--ink); }
+
+  footer{ margin-top:48px; border-top:1px solid var(--line); padding-top:22px; display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; justify-content:space-between; }
+  footer .who{ font-weight:700; }
+  footer .links{ display:flex; flex-wrap:wrap; gap:8px 16px; font-size:13.5px; }
+  footer a{ color:var(--accent); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+  .toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--bg);
+    font-size:13.5px; font-weight:600; padding:11px 18px; border-radius:99px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:opacity .2s,transform .2s; z-index:50; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="herotop">
+      <p class="eyebrow" data-k="eyebrow"></p>
+      <div class="langbar" id="langbar" role="group" aria-label="Language">
+        <button data-l="zh" type="button">繁</button>
+        <button data-l="cn" type="button">简</button>
+        <button data-l="en" type="button">EN</button>
+        <button data-l="ja" type="button">日</button>
+      </div>
+    </div>
+    <h1 data-k="h1"></h1>
+    <p class="sub" data-k="sub"></p>
+    <div class="trust">
+      <span class="badge">📱 <span data-k="b1"></span></span>
+      <span class="badge"><span data-k="b2"></span></span>
+      <span class="badge">💳 <span data-k="b3"></span></span>
+      <span class="badge">🛂 <span data-k="b4"></span></span>
+    </div>
+  </header>
+
+  <div class="calc">
+    <div class="panel inputs">
+      <div class="field">
+        <span class="lab" data-k="f_ptype"></span>
+        <select id="ptype"></select>
+      </div>
+      <div class="field">
+        <span class="lab"><span data-k="f_scale"></span> <span class="hint" id="scaleHint"></span></span>
+        <div class="rangewrap"><input type="range" id="scale" min="1" max="30" value="4" step="1"><span class="rangeval" id="scaleVal">4</span></div>
+      </div>
+      <div class="field">
+        <span class="lab" data-k="f_complexity"></span>
+        <div class="seg" id="complexity" role="group"></div>
+      </div>
+      <div class="field">
+        <span class="lab" data-k="f_timeline"></span>
+        <div class="seg" id="timeline" role="group"></div>
+      </div>
+      <div class="field">
+        <span class="lab" data-k="f_addons"></span>
+        <div class="addons" id="addons"></div>
+      </div>
+      <div class="rate">
+        <div class="rt"><span data-k="rateLabel"></span><b id="rateLabel">NT$8,000</b></div>
+        <div class="rangewrap"><input type="range" id="rate" min="6000" max="16000" value="8000" step="500"><span class="rangeval" id="rateVal">8,000</span></div>
+      </div>
+    </div>
+
+    <div class="panel result" id="resultCard">
+      <div class="rhead">
+        <span class="t" data-k="r_head"></span>
+        <div class="cur" id="currency" role="group" aria-label="Currency">
+          <button data-cur="TWD" aria-pressed="true">TWD</button>
+          <button data-cur="JPY" aria-pressed="false">JPY</button>
+          <button data-cur="USD" aria-pressed="false">USD</button>
+        </div>
+      </div>
+      <div class="amount-main">
+        <span class="label" data-k="r_range"></span>
+        <span class="val"><span id="amtLow">–</span><span class="to">~</span><span id="amtHigh">–</span></span>
+        <span class="tax" data-k="r_tax"></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span class="k" data-k="m_effort"></span><span class="v"><span id="days">–</span> <small data-k="u_days"></small></span></div>
+        <div class="metric"><span class="k" data-k="m_timeline"></span><span class="v"><span id="weeks">–</span> <small data-k="u_weeks"></small></span></div>
+        <div class="metric"><span class="k" data-k="m_deposit"></span><span class="v" id="deposit">–</span></div>
+        <div class="metric"><span class="k" data-k="m_retainer"></span><span class="v" id="retainer">–</span></div>
+      </div>
+      <div class="breakdown">
+        <div class="brow"><span data-k="bd_core"></span><span class="bv"><span id="bCore">–</span> <span data-k="u_d"></span></span></div>
+        <div class="brow"><span data-k="bd_add"></span><span class="bv">+<span id="bAdd">0</span> <span data-k="u_d2"></span></span></div>
+        <div class="brow"><span data-k="bd_rush"></span><span class="bv">×<span id="bRush">1.0</span></span></div>
+      </div>
+      <button class="copybtn" id="copy">📋 <span data-k="copy"></span></button>
+    </div>
+  </div>
+
+  <div class="below">
+    <section class="sec">
+      <h2 data-k="s_flow"></h2>
+      <p class="lead" data-k="s_flow_lead"></p>
+      <div class="cards3">
+        <div class="card"><span class="step">01</span><h3 data-k="c1_h"></h3><p data-k="c1_p"></p></div>
+        <div class="card"><span class="step">02</span><h3 data-k="c2_h"></h3><p data-k="c2_p"></p></div>
+        <div class="card"><span class="step">03</span><h3 data-k="c3_h"></h3><p data-k="c3_p"></p></div>
+      </div>
+    </section>
+    <section class="sec">
+      <h2 data-k="s_incl"></h2>
+      <div class="incl" id="inclList"></div>
+    </section>
+    <section class="sec">
+      <h2 data-k="s_notes"></h2>
+      <div class="notes"><ul id="notesList"></ul></div>
+    </section>
+  </div>
+
+  <footer>
+    <span class="who" data-k="who"></span>
+    <span class="links">
+      <a href="mailto:yujoulinforwork@gmail.com" data-k="l_email"></a>
+      <a href="https://www.cake.me/abc83327" target="_blank" rel="noopener">Cake</a>
+      <a href="https://github.com/miabuilds" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://stayjp.study" target="_blank" rel="noopener">StayJP</a>
+    </span>
+  </footer>
+</div>
+<div class="toast" id="toast" data-k="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+  var LS_LANG = 'yujou-lang';          // shared with résumé index.html
+  var LS_QUOTE = 'yujou-quote-v2';
+  var LANGATTR = { zh:'zh-Hant', cn:'zh-Hans', en:'en', ja:'ja' };
+
+  var I18N = {
+    zh:{ title:'前端接案報價 · 林雨柔',
+      eyebrow:'接案報價 · Frontend Freelance', h1:'前端接案報價 & 即時試算',
+      sub:'資深前端工程師，五年經驗，橫跨管理後台、網站、H5 與 App，尤其擅長金流／訂閱串接。拉動下面的選項，即時估出你的專案報價區間、交期與訂金。',
+      b1:'App Store 已上架作品', b2:'5 年前端經驗', b3:'金流串接專長', b4:'持日本工作簽證',
+      f_ptype:'專案類型', f_scale:'規模', f_complexity:'複雜度', f_timeline:'時程', f_addons:'加值項目',
+      rateLabel:'我的日費基準（NT$／人天）',
+      r_head:'預估報價', r_range:'預估區間', r_tax:'未稅・初步估算，實際依需求訪談確認',
+      m_effort:'預估工作量', u_days:'人天', m_timeline:'預估交期', u_weeks:'週',
+      m_deposit:'建議訂金 40%', m_retainer:'月維護（選配）',
+      bd_core:'核心開發（規模×複雜度）', bd_add:'加值項目', bd_rush:'時程係數', u_d:'天', u_d2:'天',
+      copy:'複製報價摘要', toast:'已複製報價摘要 ✓', approx:'約', perMo:'／月',
+      s_flow:'合作流程', s_flow_lead:'透明、分段、可控——每一步你都清楚錢花在哪。',
+      c1_h:'需求訪談 & 報價', c1_p:'釐清範圍、頁面、功能與時程，出正式報價單與時程表。此試算為初步區間。',
+      c2_h:'訂金 40% · 開發', c2_p:'簽約收訂金後開工，分里程碑交付，過程可預覽、可回饋，含約定次數修改。',
+      c3_h:'驗收 · 尾款 · 交付', c3_p:'驗收通過收尾款，交付原始碼與部署，附短期保固；後續可另談月維護。',
+      s_incl:'報價含 / 不含',
+      incl:['前端切版與互動開發','RWD 響應式（若勾選）','與後端 API 串接','約定次數的修改','部署上線協助','交付原始碼'],
+      excl:['UI/UX 設計稿（可另報）','主機／網域／第三方服務費','文案／素材／攝影','超出約定的需求變更'],
+      s_notes:'報價說明',
+      notes:['<b>本試算為初步估算</b>，非正式報價；實際金額以需求訪談後的正式報價單為準。',
+        '報價邏輯：<b>（規模×複雜度 ＋ 加值天數）× 時程係數 × 日費</b>，區間取 −25% ～ +20% 反映範圍彈性。',
+        '幣別為<b>約略換算</b>（JPY・USD 依固定參考匯率），跨境結算以簽約幣別與當日匯率為準。',
+        '急件（壓縮時程）會佔用其他檔期，故加成；假日／跨時區配合可再議。',
+        '大型專案建議<b>分階段簽約</b>，降低雙方風險。'],
+      who:'林雨柔 Yujou Lin · 前端工程師', l_email:'寄信給我',
+      sum:{ title:'【接案報價摘要｜林雨柔 Yujou Lin】', type:'專案類型', scale:'規模', cx:'複雜度', tl:'時程',
+        add:'加值項目', none:'無', effort:'預估工作量：約', days:'人天', deliv:'預估交期：約', weeks:'週',
+        range:'報價區間', untax:'（未稅）', dep:'建議訂金', note:'＊本報價為初步估算，實際依需求訪談確認。', contact:'聯絡' } },
+
+    cn:{ title:'前端接单报价 · 林雨柔',
+      eyebrow:'接单报价 · Frontend Freelance', h1:'前端接单报价 & 即时试算',
+      sub:'资深前端工程师，五年经验，横跨管理后台、网站、H5 与 App，尤其擅长金流／订阅串接。拖动下面的选项，即时估出你的项目报价区间、交期与订金。',
+      b1:'App Store 已上架作品', b2:'5 年前端经验', b3:'金流串接专长', b4:'持日本工作签证',
+      f_ptype:'项目类型', f_scale:'规模', f_complexity:'复杂度', f_timeline:'时程', f_addons:'加值项目',
+      rateLabel:'我的日费基准（NT$／人天）',
+      r_head:'预估报价', r_range:'预估区间', r_tax:'未税・初步估算，实际以需求访谈为准',
+      m_effort:'预估工作量', u_days:'人天', m_timeline:'预估交期', u_weeks:'周',
+      m_deposit:'建议订金 40%', m_retainer:'月维护（选配）',
+      bd_core:'核心开发（规模×复杂度）', bd_add:'加值项目', bd_rush:'时程系数', u_d:'天', u_d2:'天',
+      copy:'复制报价摘要', toast:'已复制报价摘要 ✓', approx:'约', perMo:'／月',
+      s_flow:'合作流程', s_flow_lead:'透明、分段、可控——每一步你都清楚钱花在哪。',
+      c1_h:'需求访谈 & 报价', c1_p:'厘清范围、页面、功能与时程，出正式报价单与时程表。此试算为初步区间。',
+      c2_h:'订金 40% · 开发', c2_p:'签约收订金后开工，分里程碑交付，过程可预览、可回馈，含约定次数修改。',
+      c3_h:'验收 · 尾款 · 交付', c3_p:'验收通过收尾款，交付源码与部署，附短期保固；后续可另谈月维护。',
+      s_incl:'报价含 / 不含',
+      incl:['前端切版与交互开发','RWD 响应式（若勾选）','与后端 API 串接','约定次数的修改','部署上线协助','交付源码'],
+      excl:['UI/UX 设计稿（可另报）','主机／域名／第三方服务费','文案／素材／摄影','超出约定的需求变更'],
+      s_notes:'报价说明',
+      notes:['<b>本试算为初步估算</b>，非正式报价；实际金额以需求访谈后的正式报价单为准。',
+        '报价逻辑：<b>（规模×复杂度 ＋ 加值天数）× 时程系数 × 日费</b>，区间取 −25% ～ +20% 反映范围弹性。',
+        '币别为<b>约略换算</b>（JPY・USD 依固定参考汇率），跨境结算以签约币别与当日汇率为准。',
+        '急件（压缩时程）会占用其他档期，故加成；假日／跨时区配合可再议。',
+        '大型项目建议<b>分阶段签约</b>，降低双方风险。'],
+      who:'林雨柔 Yujou Lin · 前端工程师', l_email:'给我发信',
+      sum:{ title:'【接单报价摘要｜林雨柔 Yujou Lin】', type:'项目类型', scale:'规模', cx:'复杂度', tl:'时程',
+        add:'加值项目', none:'无', effort:'预估工作量：约', days:'人天', deliv:'预估交期：约', weeks:'周',
+        range:'报价区间', untax:'（未税）', dep:'建议订金', note:'＊本报价为初步估算，实际以需求访谈为准。', contact:'联系' } },
+
+    en:{ title:'Frontend Project Quote · Yujou Lin',
+      eyebrow:'Project Quote · Frontend Freelance', h1:'Frontend Project Quote & Instant Estimate',
+      sub:"Senior frontend engineer, 5 years across admin dashboards, websites, H5 and apps — with a specialty in payments/subscription integration. Adjust the options below for an instant estimate of price range, timeline and deposit.",
+      b1:'App live on the App Store', b2:'5 years frontend', b3:'Payments specialist', b4:'Japan work visa',
+      f_ptype:'Project type', f_scale:'Scale', f_complexity:'Complexity', f_timeline:'Timeline', f_addons:'Add-ons',
+      rateLabel:'My day rate (NT$/day)',
+      r_head:'Estimate', r_range:'Estimated Range', r_tax:'Pre-tax · rough estimate, confirmed after a scoping call',
+      m_effort:'Effort', u_days:'days', m_timeline:'Timeline', u_weeks:'wks',
+      m_deposit:'Deposit 40%', m_retainer:'Monthly (opt.)',
+      bd_core:'Core (scale×complexity)', bd_add:'Add-ons', bd_rush:'Timeline factor', u_d:'d', u_d2:'d',
+      copy:'Copy quote summary', toast:'Quote copied ✓', approx:'~', perMo:'/mo',
+      s_flow:'How we work', s_flow_lead:"Transparent, staged, in control — you always know what you're paying for.",
+      c1_h:'Scoping & quote', c1_p:'We clarify scope, pages, features and timeline, then issue a formal quote and schedule. This tool is a rough range.',
+      c2_h:'40% deposit · build', c2_p:'After contract and deposit, we build in milestones with previews, feedback, and an agreed number of revisions.',
+      c3_h:'Handover', c3_p:'On acceptance, final payment; source and deployment are handed over with a short warranty. Monthly maintenance optional.',
+      s_incl:"What's included / not",
+      incl:['Frontend markup & interaction','Responsive (if selected)','Backend API integration','Agreed revisions','Deployment help','Source code handover'],
+      excl:['UI/UX design (quoted separately)','Hosting / domain / 3rd-party fees','Copy / assets / photography','Scope changes beyond agreement'],
+      s_notes:'Notes',
+      notes:['<b>This is a rough estimate</b>, not a formal quote; the final amount follows the formal quote after a scoping call.',
+        'Formula: <b>(scale×complexity + add-on days) × timeline factor × day rate</b>; the range spans −25% to +20% for flexibility.',
+        'Currencies are an <b>approximate conversion</b> (JPY·USD at a fixed reference rate); cross-border settlement uses the contract currency and the day’s rate.',
+        'Rush work compresses the schedule and displaces other slots, hence the surcharge; weekend / cross-timezone work is negotiable.',
+        'For large projects, <b>staged contracts</b> are recommended to lower risk for both sides.'],
+      who:'Yujou Lin · Frontend Engineer', l_email:'Email me',
+      sum:{ title:'[Project Quote — Yujou Lin]', type:'Project type', scale:'Scale', cx:'Complexity', tl:'Timeline',
+        add:'Add-ons', none:'None', effort:'Estimated effort: ~', days:'days', deliv:'Estimated timeline: ~', weeks:'weeks',
+        range:'Price range', untax:'(pre-tax)', dep:'Suggested deposit', note:'* Rough estimate; confirmed after a scoping call.', contact:'Contact' } },
+
+    ja:{ title:'フロント開発 見積もり · 林雨柔',
+      eyebrow:'お見積もり · Frontend Freelance', h1:'フロントエンド開発の見積もり & 即時シミュレーション',
+      sub:'5年の経験を持つフロントエンドエンジニア。管理画面・Webサイト・H5・アプリまで幅広く対応し、特に決済／サブスク連携が得意です。下の項目を選ぶと、概算の料金レンジ・納期・着手金がすぐに表示されます。',
+      b1:'App Store 公開実績あり', b2:'フロント歴 5 年', b3:'決済連携が得意', b4:'日本就労ビザ保有',
+      f_ptype:'案件タイプ', f_scale:'規模', f_complexity:'複雑さ', f_timeline:'納期', f_addons:'オプション',
+      rateLabel:'日額単価（NT$／人日）',
+      r_head:'お見積もり', r_range:'概算レンジ', r_tax:'税別・概算です。ヒアリング後に正式見積もりを確定します',
+      m_effort:'想定工数', u_days:'人日', m_timeline:'想定納期', u_weeks:'週',
+      m_deposit:'着手金 40%', m_retainer:'月額保守（任意）',
+      bd_core:'コア開発（規模×複雑さ）', bd_add:'オプション', bd_rush:'納期係数', u_d:'日', u_d2:'日',
+      copy:'見積もりをコピー', toast:'コピーしました ✓', approx:'約', perMo:'／月',
+      s_flow:'進め方', s_flow_lead:'透明・段階的・安心。何にいくらかかるか常に明確です。',
+      c1_h:'ヒアリング & 見積もり', c1_p:'範囲・ページ・機能・納期を整理し、正式なお見積もりとスケジュールを提示します。本ツールは概算です。',
+      c2_h:'着手金40% · 開発', c2_p:'契約・着手金の後に開発開始。マイルストーンごとに納品し、プレビュー・修正（既定回数）に対応します。',
+      c3_h:'検収 · 残金 · 納品', c3_p:'検収後に残金をいただき、ソースとデプロイを納品。短期保証付き。月額保守は別途相談可。',
+      s_incl:'料金に含まれるもの / 含まれないもの',
+      incl:['フロント実装・インタラクション','レスポンシブ（選択時）','バックエンドAPI連携','既定回数の修正','デプロイ支援','ソースコード納品'],
+      excl:['UI/UXデザイン（別途見積もり）','サーバー／ドメイン／外部サービス費','文章／素材／撮影','合意範囲を超える変更'],
+      s_notes:'注意事項',
+      notes:['<b>本ツールは概算です</b>。正式な金額はヒアリング後のお見積もりで確定します。',
+        '算出式：<b>（規模×複雑さ ＋ オプション日数）× 納期係数 × 日額単価</b>。レンジは幅を持たせるため −25%〜+20% としています。',
+        '通貨は<b>参考換算</b>です（JPY・USD は固定レート）。越境決済は契約通貨・当日レートに従います。',
+        '特急（短納期）は他案件の枠を圧迫するため割増になります。休日／時差対応は要相談。',
+        '大型案件は双方のリスク低減のため<b>段階契約</b>を推奨します。'],
+      who:'林雨柔 Yujou Lin · フロントエンドエンジニア', l_email:'メールする',
+      sum:{ title:'【お見積もり概算｜林雨柔 Yujou Lin】', type:'案件タイプ', scale:'規模', cx:'複雑さ', tl:'納期',
+        add:'オプション', none:'なし', effort:'想定工数：約', days:'人日', deliv:'想定納期：約', weeks:'週',
+        range:'料金レンジ', untax:'（税別）', dep:'着手金', note:'＊概算です。ヒアリング後に確定します。', contact:'連絡先' } }
+  };
+
+  var PTYPES = [
+    { id:'landing', base:6,  per:1.2, name:{zh:'形象官網 / Landing',cn:'形象官网 / Landing',en:'Landing Page',ja:'ランディングページ'}, unit:{zh:'頁',cn:'页',en:'pages',ja:'ページ'} },
+    { id:'corp',    base:8,  per:1.0, name:{zh:'企業多頁網站',cn:'企业多页网站',en:'Multi-page Website',ja:'複数ページのWebサイト'}, unit:{zh:'頁',cn:'页',en:'pages',ja:'ページ'} },
+    { id:'admin',   base:14, per:2.0, name:{zh:'管理後台 / Dashboard',cn:'管理后台 / Dashboard',en:'Admin / Dashboard',ja:'管理画面 / ダッシュボード'}, unit:{zh:'功能模組',cn:'功能模块',en:'modules',ja:'機能モジュール'} },
+    { id:'h5',      base:4,  per:1.0, name:{zh:'H5 活動頁',cn:'H5 活动页',en:'H5 Campaign Page',ja:'H5 キャンペーンページ'}, unit:{zh:'頁 / 關卡',cn:'页 / 关卡',en:'pages',ja:'ページ'} },
+    { id:'webapp',  base:18, per:2.5, name:{zh:'Web App / SaaS 前端',cn:'Web App / SaaS 前端',en:'Web App / SaaS frontend',ja:'Web App / SaaS フロント'}, unit:{zh:'功能模組',cn:'功能模块',en:'modules',ja:'機能モジュール'} },
+    { id:'rn',      base:22, per:2.5, name:{zh:'App（React Native）',cn:'App（React Native）',en:'App (React Native)',ja:'アプリ（React Native）'}, unit:{zh:'功能頁',cn:'功能页',en:'screens',ja:'画面'} }
+  ];
+  var COMPLEXITY = [
+    { id:'simple', mul:0.85, name:{zh:'簡潔',cn:'简洁',en:'Simple',ja:'シンプル'} },
+    { id:'std',    mul:1.0,  name:{zh:'標準',cn:'标准',en:'Standard',ja:'標準'} },
+    { id:'complex',mul:1.35, name:{zh:'複雜互動',cn:'复杂交互',en:'Complex',ja:'複雑'} },
+    { id:'custom', mul:1.7,  name:{zh:'高度客製',cn:'高度定制',en:'Custom',ja:'フルカスタム'} }
+  ];
+  var TIMELINE = [
+    { id:'normal', mul:1.0,  name:{zh:'正常',cn:'正常',en:'Normal',ja:'通常'}, sub:{zh:'常規排期',cn:'常规排期',en:'Standard',ja:'通常'} },
+    { id:'soon',   mul:1.25, name:{zh:'稍急',cn:'稍急',en:'Soon',ja:'やや急ぎ'}, sub:{zh:'需加班',cn:'需加班',en:'Overtime',ja:'残業対応'} },
+    { id:'rush',   mul:1.5,  name:{zh:'急件',cn:'急件',en:'Rush',ja:'特急'}, sub:{zh:'壓縮時程',cn:'压缩时程',en:'Compressed',ja:'短納期'} }
+  ];
+  var ADDONS = [
+    { id:'rwd',  days:2, name:{zh:'RWD 響應式',cn:'RWD 响应式',en:'Responsive (RWD)',ja:'レスポンシブ対応'} },
+    { id:'i18n', days:3, name:{zh:'多語系 i18n',cn:'多语系 i18n',en:'i18n',ja:'多言語対応'} },
+    { id:'pay',  days:4, name:{zh:'金流串接',cn:'金流串接',en:'Payments',ja:'決済連携'} },
+    { id:'cms',  days:5, name:{zh:'CMS 可編輯後台',cn:'CMS 可编辑后台',en:'CMS',ja:'CMS（編集画面）'} },
+    { id:'anim', days:3, name:{zh:'動畫 / 進階互動',cn:'动画 / 进阶交互',en:'Animation',ja:'アニメ / 高度な操作'} },
+    { id:'api',  days:2, name:{zh:'第三方 API 串接',cn:'第三方 API 串接',en:'3rd-party API',ja:'外部API連携'} },
+    { id:'seo',  days:2, name:{zh:'SEO / 效能優化',cn:'SEO / 性能优化',en:'SEO / Perf',ja:'SEO / 高速化'} },
+    { id:'a11y', days:2, name:{zh:'無障礙 a11y',cn:'无障碍 a11y',en:'Accessibility',ja:'アクセシビリティ'} }
+  ];
+  var FX = { TWD:1, JPY:4.7, USD:1/31.5 };
+  var SYM = { TWD:'NT$', JPY:'¥', USD:'US$' };
+  var ROUND = { TWD:1000, JPY:10000, USD:100 };
+
+  var state = { ptype:'admin', scale:4, complexity:'std', timeline:'normal', addons:{}, rate:8000, currency:'TWD' };
+  try { var sv = JSON.parse(localStorage.getItem(LS_QUOTE)||'{}'); if(sv.rate) state.rate=sv.rate; if(sv.currency) state.currency=sv.currency; } catch(e){}
+
+  var lang = detectLang();
+  function detectLang(){
+    var stored; try{ stored = localStorage.getItem(LS_LANG); }catch(e){}
+    if (stored && /^(zh|cn|en|ja)$/.test(stored)) return stored;
+    var nav = ((navigator.language||navigator.userLanguage||'zh')+'').toLowerCase();
+    if (nav.indexOf('ja')===0) return 'ja';
+    if (nav.indexOf('zh')===0) return /hans|-cn|-sg|-my/.test(nav) ? 'cn' : 'zh';
+    return 'en';
+  }
+  function T(){ return I18N[lang]; }
+  var $ = function(id){ return document.getElementById(id); };
+
+  // build select
+  var sel = $('ptype');
+  PTYPES.forEach(function(p){ var o=document.createElement('option'); o.value=p.id; sel.appendChild(o); });
+  sel.value = state.ptype;
+
+  // build segments
+  function buildSeg(el, list, key, showMul){
+    el.innerHTML='';
+    list.forEach(function(item){
+      var b=document.createElement('button'); b.type='button'; b.dataset.id=item.id;
+      b.setAttribute('aria-pressed', state[key]===item.id?'true':'false');
+      var sub=document.createElement('span'); sub.className='mul';
+      b.appendChild(document.createTextNode('')); b.appendChild(sub);
+      b.addEventListener('click', function(){
+        state[key]=item.id;
+        [].forEach.call(el.children,function(c){ c.setAttribute('aria-pressed', c.dataset.id===item.id?'true':'false'); });
+        render();
+      });
+      el.appendChild(b);
+    });
+  }
+  buildSeg($('complexity'), COMPLEXITY, 'complexity', true);
+  buildSeg($('timeline'), TIMELINE, 'timeline', false);
+
+  // build addons
+  var addEl=$('addons');
+  ADDONS.forEach(function(a){
+    var lbl=document.createElement('label'); lbl.className='addon'; lbl.dataset.id=a.id;
+    var inp=document.createElement('input'); inp.type='checkbox';
+    var nm=document.createElement('span'); nm.className='an';
+    var d=document.createElement('span'); d.className='d'; d.textContent='+'+a.days+'d';
+    lbl.appendChild(inp); lbl.appendChild(nm); lbl.appendChild(d);
+    inp.addEventListener('change', function(e){ state.addons[a.id]=e.target.checked; render(); });
+    addEl.appendChild(lbl);
+  });
+
+  // events
+  sel.addEventListener('change', function(){ state.ptype=sel.value; render(); });
+  $('scale').addEventListener('input', function(e){ state.scale=+e.target.value; render(); });
+  $('rate').addEventListener('input', function(e){ state.rate=+e.target.value; persist(); render(); });
+
+  var curEl=$('currency');
+  [].forEach.call(curEl.children,function(b){
+    b.addEventListener('click',function(){
+      state.currency=b.dataset.cur;
+      [].forEach.call(curEl.children,function(c){ c.setAttribute('aria-pressed', c.dataset.cur===state.currency?'true':'false'); });
+      persist(); render();
+    });
+  });
+  [].forEach.call(curEl.children,function(c){ c.setAttribute('aria-pressed', c.dataset.cur===state.currency?'true':'false'); });
+
+  // language switch
+  var langbar=$('langbar');
+  [].forEach.call(langbar.children,function(b){ b.addEventListener('click',function(){ setLang(b.getAttribute('data-l')); }); });
+
+  function setLang(l){
+    lang=l;
+    document.documentElement.setAttribute('lang', LANGATTR[l]||'zh-Hant');
+    try{ localStorage.setItem(LS_LANG,l); }catch(e){}
+    [].forEach.call(langbar.children,function(b){ b.classList.toggle('on', b.getAttribute('data-l')===l); });
+    applyStatic(); render();
+  }
+
+  function persist(){ try{ localStorage.setItem(LS_QUOTE, JSON.stringify({rate:state.rate,currency:state.currency})); }catch(e){} }
+  function ptype(){ return PTYPES.filter(function(p){return p.id===state.ptype;})[0]; }
+
+  function fmt(twd, cur){ var v=twd*FX[cur], r=ROUND[cur]; v=Math.round(v/r)*r; return SYM[cur]+' '+v.toLocaleString('en-US'); }
+
+  function compute(){
+    var p=ptype();
+    var c=COMPLEXITY.filter(function(x){return x.id===state.complexity;})[0];
+    var t=TIMELINE.filter(function(x){return x.id===state.timeline;})[0];
+    var coreDays=(p.base+(state.scale-1)*p.per)*c.mul;
+    var addDays=ADDONS.reduce(function(s,a){return s+(state.addons[a.id]?a.days:0);},0);
+    var totalDays=Math.max(1, Math.round((coreDays+addDays)*t.mul));
+    var amount=totalDays*state.rate;
+    return { p:p,c:c,t:t, coreDays:Math.round(coreDays), addDays:addDays, rushMul:t.mul,
+      totalDays:totalDays, amount:amount, low:amount*0.75, high:amount*1.2,
+      deposit:amount*0.4, retainer:state.rate*1.5, weeks:Math.max(1,Math.round(totalDays/4)) };
+  }
+
+  function applyStatic(){
+    var t=T();
+    document.title=t.title;
+    [].forEach.call(document.querySelectorAll('[data-k]'),function(el){
+      var k=el.getAttribute('data-k');
+      if(t[k]!=null) el.textContent=t[k];
+    });
+    // selects
+    [].forEach.call(sel.options,function(o,i){ o.textContent=PTYPES[i].name[lang]; });
+    // segments
+    updateSeg($('complexity'), COMPLEXITY, true);
+    updateSeg($('timeline'), TIMELINE, false);
+    // addons
+    [].forEach.call(addEl.children,function(lbl){
+      var a=ADDONS.filter(function(x){return x.id===lbl.dataset.id;})[0];
+      lbl.querySelector('.an').textContent=a.name[lang];
+    });
+    // included / excluded
+    var inc=$('inclList'); inc.innerHTML='';
+    t.incl.forEach(function(s){ var d=document.createElement('div'); d.className='row'; d.innerHTML='<span class="mk">✓</span> <span></span>'; d.lastChild.textContent=s; inc.appendChild(d); });
+    t.excl.forEach(function(s){ var d=document.createElement('div'); d.className='row no'; d.innerHTML='<span class="mk">✕</span> <span></span>'; d.lastChild.textContent=s; inc.appendChild(d); });
+    // notes (allow <b>)
+    var nl=$('notesList'); nl.innerHTML='';
+    t.notes.forEach(function(s){ var li=document.createElement('li'); li.innerHTML=s; nl.appendChild(li); });
+  }
+  function updateSeg(el, list, showMul){
+    [].forEach.call(el.children,function(b){
+      var item=list.filter(function(x){return x.id===b.dataset.id;})[0];
+      var sub=b.querySelector('.mul');
+      b.firstChild.nodeValue=item.name[lang];
+      sub.textContent= showMul ? ('×'+item.mul) : item.sub[lang];
+    });
+  }
+
+  function render(){
+    var t=T(), p=ptype(), r=compute(), cur=state.currency;
+    $('scaleHint').textContent=state.scale+' '+p.unit[lang];
+    $('scaleVal').textContent=state.scale;
+    $('rateVal').textContent=state.rate.toLocaleString('en-US');
+    $('rateLabel').textContent='NT$'+state.rate.toLocaleString('en-US');
+    $('amtLow').textContent=fmt(r.low,cur);
+    $('amtHigh').textContent=fmt(r.high,cur);
+    $('days').textContent=r.totalDays;
+    $('weeks').textContent=t.approx+' '+r.weeks;
+    $('deposit').textContent=fmt(r.deposit,cur);
+    $('retainer').textContent=fmt(r.retainer,cur)+t.perMo;
+    $('bCore').textContent=r.coreDays;
+    $('bAdd').textContent=r.addDays;
+    $('bRush').textContent=(r.rushMul.toFixed(2).replace(/\.?0+$/,'')||'1');
+  }
+
+  function summaryText(){
+    var s=T().sum, r=compute(), cur=state.currency;
+    var chosen=ADDONS.filter(function(a){return state.addons[a.id];}).map(function(a){return a.name[lang];});
+    return [
+      s.title,
+      s.type+'：'+r.p.name[lang],
+      s.scale+'：'+state.scale+' '+r.p.unit[lang]+'｜'+s.cx+'：'+r.c.name[lang]+'｜'+s.tl+'：'+r.t.name[lang],
+      s.add+'：'+(chosen.length?chosen.join('、'):s.none),
+      s.effort+' '+r.totalDays+' '+s.days,
+      s.deliv+' '+r.weeks+' '+s.weeks,
+      s.range+'：'+fmt(r.low,cur)+' ~ '+fmt(r.high,cur)+' '+s.untax,
+      s.dep+'：'+fmt(r.deposit,cur)+'（40%）',
+      '', s.note, s.contact+'：yujoulinforwork@gmail.com'
+    ].join('\n');
+  }
+
+  var toast=$('toast');
+  $('copy').addEventListener('click', function(){
+    var txt=summaryText();
+    var done=function(){ toast.classList.add('show'); setTimeout(function(){toast.classList.remove('show');},1800); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){fallback(txt,done);}); }
+    else fallback(txt,done);
+  });
+  function fallback(txt,done){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');done();}catch(e){} document.body.removeChild(ta); }
+
+  // init
+  $('rate').value=state.rate;
+  setLang(lang);
+})();
+</script>

@@ -315,6 +315,9 @@
         <span class="en"><b>How I work:</b> Remote · project-based · long-term · overseas &amp; English projects welcome</span>
         <span class="ja"><b>働き方：</b>リモート · プロジェクト単位 · 長期対応可 · 海外・英語案件歓迎</span>
       </p>
+      <div class="btns" style="justify-content:flex-start; margin-top:22px">
+        <a class="btn primary" href="./quote.html"><span class="zh">接案報價 · 費用試算 →</span><span class="cn">接案报价 · 费用试算 →</span><span class="en">Rates &amp; instant quote →</span><span class="ja">料金・見積もりシミュレーション →</span></a>
+      </div>
     </div>
   </section>
 
@@ -495,6 +498,7 @@
       <p><span class="zh">遠端接案、海外機會、全職都歡迎來信。</span><span class="cn">远端接案、海外机会、全职都欢迎来信。</span><span class="en">Remote contracts, overseas roles and full-time — all welcome.</span><span class="ja">リモート案件・海外勤務・正社員、いずれもお気軽にご連絡ください。</span></p>
       <div class="btns">
         <a class="btn primary js-email copied" href="mailto:yujoulinforwork@gmail.com" data-email="yujoulinforwork@gmail.com"><span class="zh">寄信給我</span><span class="cn">寄信给我</span><span class="en">Email me</span><span class="ja">メールする</span></a>
+        <a class="btn ghost" href="./quote.html"><span class="zh">接案報價</span><span class="cn">接案报价</span><span class="en">Rates</span><span class="ja">料金</span></a>
         <a class="btn ghost" href="https://www.cake.me/abc83327" target="_blank" rel="noopener">Cake</a>
         <a class="btn ghost" href="https://github.com/miabuilds" target="_blank" rel="noopener">GitHub</a>
       </div>
@@ -518,13 +522,16 @@
       root.setAttribute('data-lang',l);
       root.setAttribute('lang', LANGATTR[l]||'zh-Hant');
       [].forEach.call(seg.children,function(b){ b.classList.toggle('on', b.getAttribute('data-l')===l); });
+      try{localStorage.setItem('yujou-lang',l);}catch(e){}
     }
     seg.addEventListener('click',function(e){
       var b=e.target.closest('button'); if(b) setLang(b.getAttribute('data-l'));
     });
+    var stored; try{stored=localStorage.getItem('yujou-lang');}catch(e){}
     var nav=((navigator.language||navigator.userLanguage||'zh')+'').toLowerCase();
     var init;
-    if(nav.indexOf('ja')===0) init='ja';
+    if(stored && /^(zh|cn|en|ja)$/.test(stored)) init=stored;
+    else if(nav.indexOf('ja')===0) init='ja';
     else if(nav.indexOf('zh')===0) init=/hans|-cn|-sg|-my/.test(nav)?'cn':'zh';
     else init='en';
     setLang(init);

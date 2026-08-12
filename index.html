@@ -170,7 +170,13 @@
   .phone:hover{transform:translateY(-5px)}
   .shots-cap{text-align:center; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em; color:var(--faint); margin:4px 0 22px}
   .flag + .flag{margin-top:22px}
-  .flag .kpi{display:inline-block; margin:15px 0 0; padding:6px 14px; border:1px solid var(--accent); border-radius:999px; font-size:13px; font-weight:650; color:var(--accent); letter-spacing:.01em}
+  .pstats{display:flex; flex-wrap:wrap; gap:10px; margin:17px 0 0}
+  .pstats .ps{flex:1 1 128px; min-width:0; border:1px solid var(--line); border-radius:10px; padding:11px 13px; background:var(--bg)}
+  .pstats .ps.hi{border-color:var(--accent)}
+  .pstats .ps.hi b{color:var(--accent)}
+  .pstats b{display:block; font-size:19px; letter-spacing:-.02em; line-height:1.15}
+  .pstats span{display:block; margin-top:4px; font-size:11.5px; color:var(--faint); line-height:1.45}
+  .pstats-cap{margin:9px 0 0; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--faint)}
   .webshots{display:flex; gap:14px; margin:26px 0 6px; flex-wrap:wrap}
   .win{flex:1 1 230px; min-width:0; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--bg); box-shadow:0 14px 32px -20px rgba(27,28,32,.45); transition:.25s}
   .win img{display:block; width:100%; height:auto}
@@ -346,15 +352,22 @@
       <p class="eyebrow"><span class="zh">主要作品</span><span class="cn">主要作品</span><span class="en">Featured Work</span><span class="ja">主な制作物</span></p>
       <div class="flag">
         <div class="top">
-          <h3>StayJP <span class="sub zh">· 日語學習產品 · 已上架 App Store</span><span class="sub cn">· 日语学习产品 · 已上架 App Store</span><span class="sub en">· Japanese-learning product · Live on the App Store</span><span class="sub ja">· 日本語学習アプリ · App Store 公開中</span></h3>
+          <h3>StayJP <span class="sub zh">· 日語學習產品 · App Store 上架名稱「日本再留計劃」</span><span class="sub cn">· 日语学习产品 · App Store 上架名称「日本再留計劃」</span><span class="sub en">· Japanese-learning product · Live on the App Store</span><span class="sub ja">· 日本語学習アプリ · App Store 公開中</span></h3>
           <span class="live">stayjp.study</span>
         </div>
         <p class="desc">
-          <span class="zh">從零打造並持續營運的日語學習產品：iOS App（React Native）+ 網站 + Firebase 後端，具備訂閱金流、中英雙語 i18n、SEO 靜態落地頁與內容管理流程。設計、開發、金流、上架、營運，全一人包辦。</span><span class="cn">从零打造并持续营运的日语学习产品：iOS App（React Native）+ 网站 + Firebase 后端，具备订阅金流、中英双语 i18n、SEO 静态落地页与内容管理流程。设计、开发、金流、上架、营运，全一人包办。</span>
-          <span class="en">A Japanese-learning product I built and run solo: iOS app (React Native) + web + Firebase backend, with subscription billing, bilingual i18n, SEO landing pages and a content pipeline. Design, dev, payments, launch and ops — all me.</span>
-          <span class="ja">ゼロから開発し、運営を続けている日本語学習プロダクト。iOS アプリ（React Native）+ Web + Firebase バックエンドで、サブスク課金・多言語対応・SEO ランディングページ・コンテンツ管理まで。設計から開発・決済・公開・運営まで一人で担当。</span>
+          <span class="zh">日語學習產品，涵蓋 N5–N1：iOS App（React Native）+ 網站 + Firebase 後端，含訂閱金流、中英雙語 i18n、SRS 間隔複習、模擬考、SEO 靜態落地頁與內容管理流程。設計、開發、金流串接、上架與營運由我一人完成。</span><span class="cn">日语学习产品，涵盖 N5–N1：iOS App（React Native）+ 网站 + Firebase 后端，含订阅金流、中英双语 i18n、SRS 间隔复习、模拟考、SEO 静态落地页与内容管理流程。设计、开发、金流串接、上架与营运由我一人完成。</span>
+          <span class="en">A Japanese-learning product covering JLPT N5–N1: iOS app (React Native) + web + Firebase backend, with subscription billing, bilingual i18n, SRS review, mock exams, SEO landing pages and a content pipeline. Design, development, payments, launch and operations were all done by me.</span>
+          <span class="ja">JLPT N5〜N1 に対応した日本語学習プロダクト。iOS アプリ（React Native）+ Web + Firebase バックエンドで、サブスク課金・多言語対応・SRS 復習・模擬試験・SEO ランディングページ・コンテンツ管理を実装。設計から開発・決済・公開・運営まで一人で担当しました。</span>
         </p>
-        <p class="kpi"><span class="zh">台灣 App Store 教育類排行榜 · 最高第 14 名</span><span class="cn">台湾 App Store 教育类排行榜 · 最高第 14 名</span><span class="en">Peaked at #14 · Taiwan App Store, Education</span><span class="ja">台湾 App Store 教育カテゴリ · 最高14位</span></p>
+        <div class="pstats">
+          <div class="ps hi"><b>#14</b><span class="zh">台灣 App Store 教育類最高名次</span><span class="cn">台湾 App Store 教育类最高名次</span><span class="en">peak rank · TW App Store, Education</span><span class="ja">台湾 App Store 教育カテゴリ最高順位</span></div>
+          <div class="ps"><b>~2,000</b><span class="zh">App 累積下載</span><span class="cn">App 累计下载</span><span class="en">app downloads</span><span class="ja">アプリ累計ダウンロード</span></div>
+          <div class="ps"><b>3,000+</b><span class="zh">註冊帳號</span><span class="cn">注册账号</span><span class="en">registered accounts</span><span class="ja">登録アカウント</span></div>
+          <div class="ps"><b>50–60</b><span class="zh">付費用戶（訂閱制 20+）</span><span class="cn">付费用户（订阅制 20+）</span><span class="en">paying users (20+ on subscription)</span><span class="ja">有料ユーザー（うちサブスク20+）</span></div>
+          <div class="ps"><b>7,710</b><span class="zh">收錄單字 · 382 條文法</span><span class="cn">收录单字 · 382 条文法</span><span class="en">vocabulary entries · 382 grammar points</span><span class="ja">収録単語 · 文法382項目</span></div>
+        </div>
+        <p class="pstats-cap"><span class="zh">上架約 2 個月時的實際數據（2026.08）</span><span class="cn">上架约 2 个月时的实际数据（2026.08）</span><span class="en">Actual figures ~2 months after launch (Aug 2026)</span><span class="ja">リリース約2ヶ月時点の実数値（2026年8月）</span></p>
         <div class="flaglinks">
           <a class="lnk primary" href="https://reurl.cc/537xj6" target="_blank" rel="noopener">
             <svg class="applemark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.53c-.02-2.02 1.65-2.99 1.72-3.04-0.94-1.37-2.4-1.56-2.92-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-1.4 2.43-.36 6.02 1 7.99.67.96 1.46 2.04 2.5 2 1.01-.04 1.39-.65 2.61-.65 1.22 0 1.56.65 2.63.63 1.09-.02 1.77-.98 2.43-1.95.77-1.12 1.09-2.2 1.11-2.26-.02-.01-2.13-.82-2.15-3.24zM15.03 6.6c.55-.67.92-1.6.82-2.53-.79.03-1.75.53-2.32 1.2-.51.59-.96 1.53-.84 2.43.88.07 1.79-.45 2.34-1.1z"/></svg>

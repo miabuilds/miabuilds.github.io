@@ -177,6 +177,10 @@
   .pstats b{display:block; font-size:19px; letter-spacing:-.02em; line-height:1.15}
   .pstats span{display:block; margin-top:4px; font-size:11.5px; color:var(--faint); line-height:1.45}
   .pstats-cap{margin:9px 0 0; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--faint)}
+  .proof{margin:14px 0 0; max-width:432px}
+  .proof img{display:block; width:100%; height:auto; border-radius:11px; border:1px solid var(--line); cursor:zoom-in; transition:.22s}
+  .proof img:hover{transform:translateY(-3px); box-shadow:0 16px 34px -20px rgba(27,28,32,.55)}
+  .proof figcaption{margin:7px 0 0; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.04em; color:var(--faint); line-height:1.5}
   .webshots{display:flex; gap:14px; margin:26px 0 6px; flex-wrap:wrap}
   .win{flex:1 1 230px; min-width:0; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--bg); box-shadow:0 14px 32px -20px rgba(27,28,32,.45); transition:.25s}
   .win img{display:block; width:100%; height:auto}
@@ -368,6 +372,10 @@
           <div class="ps"><b>7,710</b><span class="zh">收錄單字 · 382 條文法</span><span class="cn">收录单字 · 382 条文法</span><span class="en">vocabulary entries · 382 grammar points</span><span class="ja">収録単語 · 文法382項目</span></div>
         </div>
         <p class="pstats-cap"><span class="zh">上架約 2 個月時的實際數據（2026.08）</span><span class="cn">上架约 2 个月时的实际数据（2026.08）</span><span class="en">Actual figures ~2 months after launch (Aug 2026)</span><span class="ja">リリース約2ヶ月時点の実数値（2026年8月）</span></p>
+        <figure class="proof">
+          <img src="assets/stayjp-rank.jpg" alt="StayJP (日本再留計劃) — App Store #14 in Education, Taiwan" loading="lazy">
+          <figcaption><span class="zh">App Store 實際頁面（2026.08 擷取）· 排行榜 #14 教育類</span><span class="cn">App Store 实际页面（2026.08 撷取）· 排行榜 #14 教育类</span><span class="en">Actual App Store page (captured Aug 2026) — #14 in Education</span><span class="ja">App Store の実際のページ（2026年8月時点）· 教育カテゴリ 14位</span></figcaption>
+        </figure>
         <div class="flaglinks">
           <a class="lnk primary" href="https://reurl.cc/537xj6" target="_blank" rel="noopener">
             <svg class="applemark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.53c-.02-2.02 1.65-2.99 1.72-3.04-0.94-1.37-2.4-1.56-2.92-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-1.4 2.43-.36 6.02 1 7.99.67.96 1.46 2.04 2.5 2 1.01-.04 1.39-.65 2.61-.65 1.22 0 1.56.65 2.63.63 1.09-.02 1.77-.98 2.43-1.95.77-1.12 1.09-2.2 1.11-2.26-.02-.01-2.13-.82-2.15-3.24zM15.03 6.6c.55-.67.92-1.6.82-2.53-.79.03-1.75.53-2.32 1.2-.51.59-.96 1.53-.84 2.43.88.07 1.79-.45 2.34-1.1z"/></svg>
@@ -631,7 +639,7 @@
     function lbClose(){ lb.hidden=true; lbimg.removeAttribute('src'); document.documentElement.style.overflow=''; }
     document.addEventListener('click',function(e){
       var t=e.target;
-      if(t && t.tagName==='IMG' && t.closest && t.closest('.phone,.win')){
+      if(t && t.tagName==='IMG' && t.closest && t.closest('.phone,.win,.proof')){
         lbimg.src=t.currentSrc||t.src; lbimg.alt=t.alt||'';
         lb.hidden=false; document.documentElement.style.overflow='hidden';
         return;

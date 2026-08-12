@@ -176,6 +176,15 @@
   .win img{display:block; width:100%; height:auto}
   .win:hover{transform:translateY(-4px)}
 
+  /* image lightbox */
+  .phone img, .win img{cursor:zoom-in}
+  .lb{position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(12,13,16,.88); cursor:zoom-out; animation:lbfade .16s ease-out}
+  .lb[hidden]{display:none}
+  .lb img{max-width:min(1000px,95vw); max-height:92vh; width:auto; height:auto; border-radius:12px; box-shadow:0 30px 90px -25px rgba(0,0,0,.8); cursor:zoom-out}
+  .lb .lbhint{position:absolute; bottom:18px; left:0; right:0; text-align:center; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:rgba(255,255,255,.55)}
+  @keyframes lbfade{from{opacity:0}to{opacity:1}}
+  @media (max-width:640px){ .lb{padding:12px} .lb .lbhint{display:none} }
+
   .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px}
   .tag{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.02em; color:var(--accent-ink); background:var(--accent-soft); border:1px solid color-mix(in srgb,var(--accent) 22%, transparent); padding:5px 10px; border-radius:7px}
   .side{margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:13px}
@@ -266,21 +275,21 @@
   <section class="hero">
     <div class="wrap">
       <span class="status"><span class="dot"></span> <span class="zh">開放接案與全職機會中</span><span class="cn">开放接案与全职机会中</span><span class="en">Available for freelance &amp; full-time</span><span class="ja">業務委託・正社員 いずれも対応可</span></span>
-      <p class="role">Full-Stack Product Engineer · Payments × AI</p>
+      <p class="role">Frontend Engineer · Vue / React Native · iOS &amp; Subscriptions</p>
       <h1 class="name"><span class="zh">林雨柔 Yujou Lin</span><span class="cn">林雨柔 Yujou Lin</span><span class="en">Yujou Lin</span><span class="ja">林雨柔 Yujou Lin</span></h1>
       <p class="lead">
-        <span class="zh">能把產品從 0 做到上線變現的全端工程師。</span><span class="cn">能把产品从 0 做到上线变现的全栈工程师。</span>
-        <span class="en">A full-stack engineer who ships products end to end.</span>
-        <span class="ja">製品をゼロからリリース・収益化まで実現するフルスタックエンジニア。</span>
+        <span class="zh">前端工程師，主力 Vue 與 React Native；也獨立開發、上架並營運自己的 App 產品。</span><span class="cn">前端工程师，主力 Vue 与 React Native；也独立开发、上架并营运自己的 App 产品。</span>
+        <span class="en">Frontend engineer working mainly in Vue and React Native. I also build, ship and run my own apps.</span>
+        <span class="ja">フロントエンドエンジニア。Vue と React Native が主軸。個人でもアプリを開発・公開・運営しています。</span>
       </p>
       <p class="pitch">
-        <span class="zh">五年工程經驗，橫跨大型多語系平台的後台與帳務系統，與獨立出貨的 App 產品。我不只寫介面——iOS 上架、訂閱金流、多語系、SEO，一手包辦。</span><span class="cn">五年工程经验，横跨大型多语系平台的后台与账务系统，与独立出货的 App 产品。我不只写界面——iOS 上架、订阅金流、多语系、SEO，一手包办。</span>
-        <span class="en">Five years across enterprise multi-language platforms and solo-shipped apps. I don't just build UIs — I take products from zero to the App Store, with subscriptions, i18n and SEO, on my own.</span>
-        <span class="ja">エンジニア歴5年。大規模な多言語プラットフォームの管理・課金システムから、個人でリリースしたアプリまで幅広く対応。UI を作るだけでなく、App Store 公開・課金・多言語対応・SEO まで一人で手がけます。</span>
+        <span class="zh">2021 年起從事前端開發。工作上做過新加坡市場的車貸審批系統、多品牌娛樂平台的營運與代理後台（Vue 3 + TypeScript）、Vue 2 + SSR 多皮膚遊戲前台，以及優惠券與權限管理系統。個人專案 StayJP 已上架 App Store，曾登上台灣教育類排行榜第 14 名；StayTW 網頁版營運中。另有 Firebase、Cloudflare Workers、訂閱金流與 LLM API 串接經驗，持 PMP 專案管理師認證。</span><span class="cn">2021 年起从事前端开发。工作上做过新加坡市场的车贷审批系统、多品牌娱乐平台的营运与代理后台（Vue 3 + TypeScript）、Vue 2 + SSR 多皮肤游戏前台，以及优惠券与权限管理系统。个人专案 StayJP 已上架 App Store，曾登上台湾教育类排行榜第 14 名；StayTW 网页版营运中。另有 Firebase、Cloudflare Workers、订阅金流与 LLM API 串接经验，持 PMP 专案管理师认证。</span>
+        <span class="en">Frontend developer since 2021. Work has covered a car-loan approval system for the Singapore market, operator and agent consoles for a multi-brand entertainment platform (Vue 3 + TypeScript), a Vue 2 + SSR multi-skin game front-end, and coupon and permission-management systems. On my own time I built StayJP, live on the App Store and once ranked #14 in Taiwan's Education category, and StayTW, whose web build is running now. I have also worked with Firebase, Cloudflare Workers, subscription billing and LLM APIs. PMP certified.</span>
+        <span class="ja">2021年よりフロントエンド開発に従事。業務ではシンガポール市場向けの自動車ローン審査システム、マルチブランド展開のエンターテインメントプラットフォームの運営・代理店管理画面（Vue 3 + TypeScript）、Vue 2 + SSR のマルチスキン対応ゲームフロントエンド、クーポン・権限管理システムなどを担当。個人開発では StayJP を App Store で公開し、台湾の教育カテゴリで最高14位。StayTW は Web 版を運営中。ほかに Firebase、Cloudflare Workers、サブスク課金、LLM API 連携の経験があり、PMP を保有しています。</span>
       </p>
       <div class="highlights">
         <div class="hl"><b>5+ <span class="zh" style="font-weight:400;font-size:14px">年</span><span class="cn" style="font-weight:400;font-size:14px">年</span><span class="en" style="font-weight:400;font-size:14px">yrs</span><span class="ja" style="font-weight:400;font-size:14px">年</span></b><span class="zh">工程開發經驗</span><span class="cn">工程开发经验</span><span class="en">engineering experience</span><span class="ja">エンジニア経験</span></div>
-        <div class="hl"><b>App Store</b><span class="zh">獨立上架營運中的產品</span><span class="cn">独立上架营运中的产品</span><span class="en">shipped &amp; running solo</span><span class="ja">個人開発・公開中</span></div>
+        <div class="hl"><b>#14</b><span class="zh">StayJP · 台灣 App Store 教育類最高名次</span><span class="cn">StayJP · 台湾 App Store 教育类最高名次</span><span class="en">StayJP · peak rank, TW App Store Education</span><span class="ja">StayJP · 台湾 App Store 教育カテゴリ最高順位</span></div>
         <div class="hl"><b><span class="zh">技人國</span><span class="cn">技人国</span><span class="en">Work Visa</span><span class="ja">技人国</span></b><span class="zh">持日本工作簽證</span><span class="cn">持日本工作签证</span><span class="en">Japan work visa held</span><span class="ja">在留資格を保有</span></div>
         <div class="hl"><b>Remote</b><span class="zh">海外・遠端皆可</span><span class="cn">海外・远端皆可</span><span class="en">overseas &amp; remote OK</span><span class="ja">海外・リモート可</span></div>
       </div>
@@ -600,6 +609,25 @@
       },{rootMargin:'0px 0px -8% 0px', threshold:.08});
       els.forEach(function(el){io.observe(el);});
     } else { els.forEach(function(el){el.classList.add('in');}); }
+
+    // image lightbox — 點作品截圖放大，再點一次 / Esc 關閉
+    var lb=document.createElement('div'); lb.className='lb'; lb.hidden=true;
+    var lbimg=document.createElement('img'); lbimg.alt='';
+    var hint=document.createElement('div'); hint.className='lbhint'; hint.textContent='ESC / CLICK TO CLOSE';
+    lb.appendChild(lbimg); lb.appendChild(hint); document.body.appendChild(lb);
+    function lbClose(){ lb.hidden=true; lbimg.removeAttribute('src'); document.documentElement.style.overflow=''; }
+    document.addEventListener('click',function(e){
+      var t=e.target;
+      if(t && t.tagName==='IMG' && t.closest && t.closest('.phone,.win')){
+        lbimg.src=t.currentSrc||t.src; lbimg.alt=t.alt||'';
+        lb.hidden=false; document.documentElement.style.overflow='hidden';
+        return;
+      }
+      if(!lb.hidden){ lbClose(); }
+    });
+    document.addEventListener('keydown',function(e){
+      if((e.key==='Escape'||e.keyCode===27) && !lb.hidden){ lbClose(); }
+    });
   })();
 </script>
 </body>

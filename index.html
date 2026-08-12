@@ -185,6 +185,10 @@
   .job .co{font-weight:700; font-size:18px; letter-spacing:-.015em}
   .job .role2{font-size:13.5px; color:var(--muted)}
   .job .when{font-family:var(--font-mono); font-size:12px; letter-spacing:.02em; color:var(--faint); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .job .stints{margin:5px 0 0; display:flex; flex-direction:column; gap:2px}
+  .job .st{display:flex; align-items:baseline; justify-content:space-between; gap:6px 12px; flex-wrap:wrap; font-size:13px; color:var(--muted); line-height:1.5}
+  .job .stwhen{font-family:var(--font-mono); font-size:11.5px; color:var(--faint); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .job .closed{margin:6px 0 0; font-size:12.5px; color:var(--faint); letter-spacing:.01em; line-height:1.5}
   .job ul{margin:8px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px}
   .job li{position:relative; padding-left:16px; font-size:14px; color:var(--muted); line-height:1.55}
   .job li::before{content:""; position:absolute; left:0; top:.72em; width:5px; height:5px; border-radius:50%; background:var(--accent); opacity:.5}
@@ -376,9 +380,14 @@
 
         <div class="job">
           <div class="jh">
-            <div><span class="co"><span class="zh">宇來有限公司</span><span class="cn">宇来有限公司</span><span class="en">Yulai Co., Ltd.</span><span class="ja">宇來有限公司</span></span> <span class="role2"><span class="zh">前端工程師</span><span class="cn">前端工程师</span><span class="en">Frontend Engineer</span><span class="ja">フロントエンドエンジニア</span></span></div>
-            <span class="when">2025.05 – 2026.07</span>
+            <div><span class="co"><span class="zh">新星通信株式会社</span><span class="cn">新星通信株式会社</span><span class="en">Shinsei Tsushin Co., Ltd.</span><span class="ja">新星通信株式会社</span></span> <span class="role2"><span class="zh">前端工程師</span><span class="cn">前端工程师</span><span class="en">Frontend Engineer</span><span class="ja">フロントエンドエンジニア</span></span></div>
+            <span class="when">2025.05 – 2026.06</span>
           </div>
+          <div class="stints">
+            <div class="st"><span class="stco"><span class="zh">新星通信株式会社（日本法人）</span><span class="cn">新星通信株式会社（日本法人）</span><span class="en">Shinsei Tsushin Co., Ltd. — Japan entity</span><span class="ja">新星通信株式会社（日本法人）</span></span><span class="stwhen">2026.05 – 2026.06</span></div>
+            <div class="st"><span class="stco"><span class="zh">宇來有限公司（台灣法人・同集團／期間內多次赴日出差）</span><span class="cn">宇来有限公司（台湾法人・同集团／期间内多次赴日出差）</span><span class="en">Yulai Co., Ltd. — Taiwan entity, same group (frequent business trips to Japan)</span><span class="ja">宇來有限公司（台湾法人・同グループ／日本出張ベースで従事）</span></span><span class="stwhen">2025.05 – 2026.04</span></div>
+          </div>
+          <p class="closed"><span class="zh">※ 同一專案自 2025.05 起連續負責，2026.05 轉籍至日本法人。該公司已於 2026 年 6 月結束營業。</span><span class="cn">※ 同一项目自 2025.05 起连续负责，2026.05 转籍至日本法人。该公司已于 2026 年 6 月结束营业。</span><span class="en">※ Continuously owned the same project from May 2025; transferred to the Japan entity in May 2026. The company ceased operations in June 2026.</span><span class="ja">※ 同一案件を2025年5月より継続担当し、2026年5月に日本法人へ転籍。同社は2026年6月に事業を終了。</span></p>
           <p class="lede"><span class="zh">大型多語系娛樂平台。主責兩大管理後台，並支援遊戲前台。</span><span class="cn">大型多语系娱乐平台。主责两大管理后台，并支援游戏前台。</span><span class="en">Large multi-language entertainment platform. Owned two admin systems and supported the game front-end.</span><span class="ja">大規模な多言語エンターテインメントプラットフォーム。2つの管理システムを主担当し、ゲームフロントエンドも支援。</span></p>
           <ul>
             <li><span class="zh">以 Vue 3 + TypeScript + Element Plus + Pinia + Vite + UnoCSS 開發營運後台，含活動管理、會員／優惠券、ECharts 數據可視化與多語系。</span><span class="cn">以 Vue 3 + TypeScript + Element Plus + Pinia + Vite + UnoCSS 开发营运后台，含活动管理、会员／优惠券、ECharts 数据可视化与多语系。</span><span class="en">Built the operator console in Vue 3 + TypeScript + Element Plus + Pinia + Vite + UnoCSS — campaign management, members/coupons, ECharts dashboards and i18n.</span><span class="ja">Vue 3 + TypeScript + Element Plus + Pinia + Vite + UnoCSS で運営管理画面を開発。キャンペーン管理・会員／クーポン・ECharts ダッシュボード・多言語対応。</span></li>
